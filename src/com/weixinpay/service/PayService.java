@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import cn.com.hq.dao.Dao;
 import cn.com.hq.util.StringUtil;
 
@@ -22,9 +24,8 @@ import com.weixinpay.model.OrderInfo;
 import com.weixinpay.model.OrderInfoView;
 
 public class PayService {
-	
+	private static Logger logger = Logger.getLogger(PayService.class);
 	private Dao dao = new Dao();
-	
 	public boolean  isOrderFirstQuery(String orderId){
 		String sql = "select confirmTime from 568db.finance_pay where orderid=?";
 		Connection connection =  dao.getDBConnection();
@@ -388,7 +389,9 @@ public class PayService {
 	}
 	
 	public void updateBYJLFinancePayContent(String vin,String resultStr) {
+		logger.info("updateBYJLFinancePayContent start...............................");
 		String sql = "update 568db.finance_pay set content='"+resultStr+"' where querycondition LIKE '&vin="+vin+"%' and queryType='BYJL'";
+		logger.info("sql\r\n"+sql);
 		Connection connection =  dao.getDBConnection();
 		PreparedStatement  ps;
 		try {
