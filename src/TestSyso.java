@@ -10,7 +10,7 @@ import com.weixinpay.service.PayService;
 public class TestSyso {
 	private PayService payService = new PayService();   
 	public static void main(String[] args) {
-		String s1 =  CBS.getInstance(QueryAppKeyLib.baoyangUserId,QueryAppKeyLib.baoyangUserKey).getCheckBrand("LVSFDFAB0AN170786");
+		String s1 =  CBS.getInstance(QueryAppKeyLib.baoyangUserId,QueryAppKeyLib.baoyangUserKey).getCheckBrand("LVRHM4855C5097733");
 		System.out.println(s1);
 		
 	}
