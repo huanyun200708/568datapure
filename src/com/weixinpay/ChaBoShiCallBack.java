@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
+import cn.com.hq.util.JsonUtils;
 import cn.com.hq.util.QueryAppKeyLib;
 
 import com.chaboshi.util.CBS;
@@ -39,7 +40,7 @@ public class ChaBoShiCallBack extends HttpServlet {
 			System.out.println("callResult:\r\n"+callResult);
 			WXJL w = gson.fromJson(callResult, WXJL.class);
 			w.translateWBJL(w);
-			payService.updateBYJLFinancePayContent(w.getVin(),callResult);
+			payService.updateBYJLFinancePayContent(w.getVin(),JsonUtils.toJson(w));
 			logger.info("callResult:\r\n"+callResult);
 		}
 		logger.info("ChaBoShiCallBack end...............................");
