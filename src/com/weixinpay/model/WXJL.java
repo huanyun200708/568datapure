@@ -168,7 +168,8 @@ public class WXJL {
 		if(!StringUtil.isEmpty(carFireFlag)){
 			switch (carFireFlag) {
 				case "0":carFireFlag = "否";break;
-				default:carFireFlag = "是";break;
+				case "1":carFireFlag = "是";break;
+				default:break;
 			}
 		}
 		return carFireFlag;
@@ -178,7 +179,8 @@ public class WXJL {
 		if(!StringUtil.isEmpty(carFireFlag)){
 			switch (carFireFlag) {
 				case "0":carFireFlag = "否";break;
-				default:carFireFlag = "是";break;
+				case "1":carFireFlag = "是";break;
+				default:break;
 			}
 		}
 		this.carFireFlag = carFireFlag;
@@ -188,7 +190,8 @@ public class WXJL {
 		if(!StringUtil.isEmpty(carWaterFlag)){
 			switch (carWaterFlag) {
 				case "0":carWaterFlag = "否";break;
-				default:carWaterFlag = "是";break;
+				case "1":carWaterFlag = "是";break;
+				default:break;
 			}
 		}
 		return carWaterFlag;
@@ -198,7 +201,8 @@ public class WXJL {
 		if(!StringUtil.isEmpty(carWaterFlag)){
 			switch (carWaterFlag) {
 				case "0":carWaterFlag = "否";break;
-				default:carWaterFlag = "是";break;
+				case "1":carWaterFlag = "是";break;
+				default:break;
 			}
 		}
 		this.carWaterFlag = carWaterFlag;
@@ -208,7 +212,8 @@ public class WXJL {
 		if(!StringUtil.isEmpty(carComponentRecordsFlag)){
 			switch (carComponentRecordsFlag) {
 				case "0":carComponentRecordsFlag = "否";break;
-				default:carComponentRecordsFlag = "是";break;
+				case "1":carComponentRecordsFlag = "是";break;
+				default:break;
 			}
 		}
 		return carComponentRecordsFlag;
@@ -218,7 +223,8 @@ public class WXJL {
 		if(!StringUtil.isEmpty(carComponentRecordsFlag)){
 			switch (carComponentRecordsFlag) {
 				case "0":carComponentRecordsFlag = "否";break;
-				default:carComponentRecordsFlag = "是";break;
+				case "1":carComponentRecordsFlag = "是";break;
+				default:break;
 			}
 		}
 		this.carComponentRecordsFlag = carComponentRecordsFlag;
@@ -228,7 +234,8 @@ public class WXJL {
 		if(!StringUtil.isEmpty(carConstructRecordsFlag)){
 			switch (carConstructRecordsFlag) {
 				case "0":carConstructRecordsFlag = "否";break;
-				default:carConstructRecordsFlag = "是";break;
+				case "1":carConstructRecordsFlag = "是";break;
+				default:break;
 			}
 		}
 		return carConstructRecordsFlag;
@@ -238,7 +245,8 @@ public class WXJL {
 		if(!StringUtil.isEmpty(carConstructRecordsFlag)){
 			switch (carConstructRecordsFlag) {
 				case "0":carConstructRecordsFlag = "否";break;
-				default:carConstructRecordsFlag = "是";break;
+				case "1":carConstructRecordsFlag = "是";break;
+				default:break;
 			}
 		}
 		this.carConstructRecordsFlag = carConstructRecordsFlag;
@@ -248,7 +256,8 @@ public class WXJL {
 		if(!StringUtil.isEmpty(carOutsideRecordsFlag)){
 			switch (carOutsideRecordsFlag) {
 				case "0":carOutsideRecordsFlag = "否";break;
-				default:carOutsideRecordsFlag = "是";break;
+				case "1":carOutsideRecordsFlag = "是";break;
+				default:break;
 			}
 		}
 		return carOutsideRecordsFlag;
@@ -258,7 +267,8 @@ public class WXJL {
 		if(!StringUtil.isEmpty(carOutsideRecordsFlag)){
 			switch (carOutsideRecordsFlag) {
 				case "0":carOutsideRecordsFlag = "否";break;
-				default:carOutsideRecordsFlag = "是";break;
+				case "1":carOutsideRecordsFlag = "是";break;
+				default:break;
 			}
 		}
 		this.carOutsideRecordsFlag = carOutsideRecordsFlag;
@@ -268,7 +278,8 @@ public class WXJL {
 		if(!StringUtil.isEmpty(mileageIsNormalFlag)){
 			switch (mileageIsNormalFlag) {
 				case "0":mileageIsNormalFlag = "否";break;
-				default:mileageIsNormalFlag = "是";break;
+				case "1":mileageIsNormalFlag = "是";break;
+				default:break;
 			}
 		}
 		return mileageIsNormalFlag;
@@ -279,7 +290,8 @@ public class WXJL {
 		if(!StringUtil.isEmpty(mileageIsNormalFlag)){
 			switch (mileageIsNormalFlag) {
 				case "0":mileageIsNormalFlag = "否";break;
-				default:mileageIsNormalFlag = "是";break;
+				case "1":mileageIsNormalFlag = "是";break;
+				default:break;
 			}
 		}
 		this.mileageIsNormalFlag = mileageIsNormalFlag;
@@ -289,7 +301,6 @@ public class WXJL {
 		if(!StringUtil.isEmpty(mileageEstimate)){
 			switch (mileageEstimate) {
 				case "0":mileageEstimate = "没有估出来";break;
-				case "":mileageEstimate = "没有估出来";break;
 				default:break;
 			}
 		}
@@ -419,7 +430,7 @@ public class WXJL {
 		order.setQueryCondition("&vin=" + vin+"&enginno=" + enginno+"&licenseplate=" + licenseplate);
 		// order.setOpenid("oUm4A0UA7pG6t-TQUVsLQqRppNl8");
 		//先检查一下品牌是否支持查询
-		String s1 =  CBS.getInstance(QueryAppKeyLib.baoyangUserId,QueryAppKeyLib.baoyangUserKey).getCheckBrand(vin);
+/*		String s1 =  CBS.getInstance(QueryAppKeyLib.baoyangUserId,QueryAppKeyLib.baoyangUserKey).getCheckBrand(vin);
 		System.out.println(s1);
 		logger.info("BYJL-pre-QueryResult1:\r\n" + s1);
 		Map<String,String> m1 = JsonUtils.json2Map(s1);
@@ -427,8 +438,8 @@ public class WXJL {
 			order.setQueryResult("查询失败");
 			payService.updateFinancePayContent(order);
 			return "{\"errorMessage\":\"" +m1.get("Message") + "\",\"success\":false}";
-		}
-		String s =  CBS.getInstance(QueryAppKeyLib.baoyangUserId,QueryAppKeyLib.baoyangUserKey).getBuyReport(vin, enginno,licenseplate, QueryAppKeyLib.baoyangCallBackUrl);
+		}*/
+		String s =  CBS.getInstance(QueryAppKeyLib.baoyangUserId,QueryAppKeyLib.baoyangUserKey).getBuyReport(vin, enginno,null, QueryAppKeyLib.baoyangCallBackUrl);
 		//String s =  DemoData.WBJL;//测试代码
 		s = s.replaceAll("\":\\s*,", "\":\\\"\\\",");
 		WXJL w = gson.fromJson(s, WXJL.class);
