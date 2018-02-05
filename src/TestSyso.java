@@ -10,8 +10,8 @@ import com.weixinpay.service.PayService;
 public class TestSyso {
 	private PayService payService = new PayService();   
 	public static void main(String[] args) {
-		String s1 =  CBS.getInstance(QueryAppKeyLib.baoyangUserId,QueryAppKeyLib.baoyangUserKey).getCheckBrand("LVGEN56AXFG006549");
-		System.out.println(s1);
+		//String s1 =  CBS.getInstance(QueryAppKeyLib.baoyangUserId,QueryAppKeyLib.baoyangUserKey).getCheckBrand("WDDKJHB8BF092144");
+		System.out.println("'长命'".replaceAll("'", "‘"));
 		
 	}
 	public static void testRegex(){
