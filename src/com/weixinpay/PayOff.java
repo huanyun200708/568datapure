@@ -60,7 +60,8 @@ public class PayOff extends HttpServlet {
 		logger.info("PayOff start...............................");
 		String code = request.getParameter("code");
 		String payType = request.getParameter("payType");
-		System.out.println("code : "+code + "----payType : "+payType);
+		String useDaijinquan = request.getParameter("useDaijinquan");
+		System.out.println("code : "+code + "----payType : "+payType+ "----useDaijinquan : "+useDaijinquan);
 		logger.info("code : "+code + "----payType : "+payType);
 		String queryResult = "";
 		 Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").enableComplexMapKeySerialization().disableHtmlEscaping().create();
@@ -96,7 +97,8 @@ public class PayOff extends HttpServlet {
 			if("GJHY".equals(payType)){
 				order.setBody("Be senior member");
 				String beHighMemberPrice = PropertiesUtils.getPropertyValueByKey("beHighMemberPrice");
-				order.setTotal_fee(Integer.valueOf(beHighMemberPrice));//设置价格
+				int fee = Integer.valueOf(beHighMemberPrice);
+				order.setTotal_fee(fee);//设置价格
 //order.setTotal_fee(1);//TODO Test Code
 			}else if("ZJHY".equals(payType)){
 				order.setBody("Be intermediate Member");
@@ -114,6 +116,9 @@ public class PayOff extends HttpServlet {
 					queryCondition = queryCondition+"&type="+cltypevalue;
 				}
 				CLZT.setOrderFee(request, order, memberLevel);
+				if("1".equals(useDaijinquan)){//使用1元代金券
+					order.setTotal_fee(order.getTotal_fee()-100);
+				}
 //order.setTotal_fee(1);//TODO Test C
 			}else if("BYJL".equals(payType)){
 				order.setBody("Vehicle maintenance record query");
@@ -131,7 +136,9 @@ public class PayOff extends HttpServlet {
 				}
 				
 				BYJL.setOrderFee(request, order, memberLevel);
-				
+				if("1".equals(useDaijinquan)){//使用1元代金券
+					order.setTotal_fee(order.getTotal_fee()-100);
+				}
 				/*order.setQueryCondition(queryCondition);
 				Map<String,String> resultMap = payService.getBYJLqueryCondition(order.getOpenid(), vin);
 				//说明用户上次上次查询结果报告还没有生成，则不再重复付款
@@ -159,6 +166,9 @@ public class PayOff extends HttpServlet {
 				}
 				
 				CXJL.setOrderFee(request, order, memberLevel);
+				if("1".equals(useDaijinquan)){//使用1元代金券
+					order.setTotal_fee(order.getTotal_fee()-100);
+				}
 //order.setTotal_fee(1);//TODO Test C
 			}else if("TBXX".equals(payType)){
 				order.setBody("Tou bao xin xi");
@@ -183,6 +193,9 @@ public class PayOff extends HttpServlet {
 				
 				//设置金额
 				TBXX.setOrderFee(request, order, memberLevel);
+				if("1".equals(useDaijinquan)){//使用1元代金券
+					order.setTotal_fee(order.getTotal_fee()-100);
+				}
 //order.setTotal_fee(1);//TODO Test C
 			}
 			
@@ -192,8 +205,8 @@ public class PayOff extends HttpServlet {
 				for(String s : sman){
 					if(openid.equals(s)){
 						order.setTotal_fee(1);//TODO Super Man Occur!!!
-						System.out.println("Super Man Occur!!!");
-						logger.info("Super Man Occur!!!");
+						System.out.println("Super Man "+openid+" Occur!!!");
+						logger.info("Super Man "+openid+" Occur!!!");
 						break;
 					}
 				}

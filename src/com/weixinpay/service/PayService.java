@@ -119,6 +119,7 @@ public class PayService {
 		return order;
 	}
 	
+	
 	public List<JSONObject> getPayRecordsByOpenId(String openid){
 		 List<JSONObject> results = new ArrayList<JSONObject>();
 		String sql = "SELECT orderid,paytime,queryType,querycondition,content"

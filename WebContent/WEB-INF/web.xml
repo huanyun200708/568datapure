@@ -16,6 +16,22 @@
    <param-value>utf-8</param-value>  
   </init-param>  
  </filter>  
+   <filter>
+    <filter-name>struts2</filter-name>
+    <filter-class>
+	        org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter         
+	    </filter-class>
+    <init-param>
+      <param-name>actionPackages</param-name>
+      <param-value>cn.com.hq.action</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>struts2</filter-name>
+    <url-pattern>/*</url-pattern>
+    <url-pattern>*.action</url-pattern>
+    <url-pattern>*.do</url-pattern>
+  </filter-mapping>
  <filter-mapping>  
   <!--   
    filter-mapping告诉容器所有与模式向匹配的请求都应该允许通过访问控制过滤器。  

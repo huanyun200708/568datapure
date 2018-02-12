@@ -5,7 +5,7 @@
 	<property name="user">568data</property>
 	<property name="password">568data</property>
 	<property name="driverClass">com.mysql.jdbc.Driver</property>
-	<property name="jdbcUrl">jdbc:mysql://118.25.11.60:3306/568db</property>  
+	<property name="jdbcUrl">jdbc:mysql://118.25.11.60:3306/568db?useSSL=false</property>  
 	
 	<!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数 -->
 	<property name="acquireIncrement">5</property>
