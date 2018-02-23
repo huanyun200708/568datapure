@@ -35,6 +35,7 @@ import com.weixinpay.model.OrderReturnInfo;
 import com.weixinpay.model.SignInfo;
 import com.weixinpay.model.TBXX;
 import com.weixinpay.model.WXUser;
+import com.weixinpay.service.DaijinquanService;
 import com.weixinpay.service.PayService;
 
 /**
@@ -44,7 +45,7 @@ public class PayOff extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private PayService payService = new PayService();   
 	private static Logger logger = Logger.getLogger(PayOff.class);
-	
+	private DaijinquanService service = new DaijinquanService();
 
 	/**
 	 * @param payType:
@@ -65,7 +66,8 @@ public class PayOff extends HttpServlet {
 		logger.info("code : "+code + "----payType : "+payType);
 		String queryResult = "";
 		 Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").enableComplexMapKeySerialization().disableHtmlEscaping().create();
-	    String queryCondition = "";   
+	    String queryCondition = "";  
+	    
 		try {
 			/*********获取用户openid开始***************/
 			System.out.println("获取用户openid开始");
@@ -86,6 +88,11 @@ public class PayOff extends HttpServlet {
 	        System.out.println("生成订单开始");
 	        logger.info("生成订单开始");
 	        String openid = u.getOpenid();
+	        //扣除代金券
+	        if("1".equals(useDaijinquan)){
+		    	service.deleteOldestDaijinquan(openid);
+		    	logger.info(openid+"的一张代金券已经扣除");
+			}
 			OrderInfo order = new OrderInfo();
 			order.setOpenid(openid);
 			order.setAppid(Configure.getAppID());

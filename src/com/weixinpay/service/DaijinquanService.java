@@ -146,6 +146,60 @@ public class DaijinquanService {
 		return result;
 	}
 	
+	public void deleteOldestDaijinquan(String openid){
+		 List<JSONObject> results = new ArrayList<JSONObject>();
+		String sql = "SELECT `voucher_code`,`voucher_fee`,`start_date`,`end_date`,`open_id` FROM `voucher` where open_id=? ORDER BY end_date";
+		Connection connection =  dao.getDBConnection();
+		try {
+			PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setString(1, openid);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				JSONObject json = new JSONObject();
+				String voucher_code = rs.getString(1);
+				String voucher_fee = rs.getString(2);
+				String start_date = rs.getString(3);
+				String end_date = rs.getString(4);
+				
+				DateFormat format1 = new SimpleDateFormat("yyyyMMdd");
+				DateFormat format2  = new SimpleDateFormat("yyyy年MM月dd日");
+				
+				Date d1 = format1.parse(start_date);
+				start_date = format2.format(d1);
+				Date d2 = format1.parse(end_date);
+				end_date = format2.format(d2);
+				
+				Calendar calendar1 = Calendar.getInstance();
+				Calendar calendar2 = Calendar.getInstance();
+				Calendar nowcalendar = Calendar.getInstance();
+				calendar1.setTime(d1);
+				calendar2.setTime(d2);
+				
+				if(nowcalendar.after(calendar2)){
+					continue;
+				}
+				
+				json.put("voucher_code", voucher_code);
+				json.put("voucher_fee", voucher_fee);
+				json.put("start_date", start_date);
+				json.put("end_date", end_date);
+				
+				results.add(json);
+		    }
+			dao.closeStatement(ps);
+			if(results.size()>0){
+				sql = "DELETE FROM `voucher`  WHERE  voucher_code='"+results.get(0).get("voucher_code")+"'";
+				ps = connection.prepareStatement(sql);
+				ps.executeUpdate();
+			}
+			dao.closeStatement(ps);
+			Dao.releaseConnection(connection);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public boolean updateDaijinquanShare(DaijinquanShare share) {
 		boolean result = false;
 		String sql = "update user_share set from_openid=?,to_openid=?,share_success=?,accept_success=? where voucher_code=?";
