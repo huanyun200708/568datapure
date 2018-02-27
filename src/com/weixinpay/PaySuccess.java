@@ -35,7 +35,7 @@ public class PaySuccess extends HttpServlet {
 		try {
 			String payType = request.getParameter("payType");
 			logger.info("---PaySuccess start--- orderId : " + orderId);
-			logger.info("---PaySuccess start--- payType : " + payType);
+			logger.info("---PaySuccess start--- payType : " + payType);        
 			logger.info("---PaySuccess start--- 开始查询 ");
 			String queryResult ="";
 			//queryResult = CXJL.queryResult(request, orderId);
