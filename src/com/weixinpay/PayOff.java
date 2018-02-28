@@ -60,34 +60,40 @@ public class PayOff extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.info("PayOff start...............................");
 		String code = request.getParameter("code");
+		String openid = request.getParameter("openid");
 		String payType = request.getParameter("payType");
 		String useDaijinquan = request.getParameter("useDaijinquan");
 		System.out.println("code : "+code + "----payType : "+payType+ "----useDaijinquan : "+useDaijinquan);
+		logger.info("openid : "+openid);
 		logger.info("code : "+code + "----payType : "+payType);
 		String queryResult = "";
 		 Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").enableComplexMapKeySerialization().disableHtmlEscaping().create();
 	    String queryCondition = "";  
-	    
+	    String result = "";  
 		try {
-			/*********获取用户openid开始***************/
-			System.out.println("获取用户openid开始");
-			logger.info("获取用户openid开始");
-			String url = "https://api.weixin.qq.com/sns/jscode2session?appid="+Configure.getAppID()+"&secret="+Configure.getSecret()+"&js_code="+code+"&grant_type=authorization_code";
-			HttpGet httpGet = new HttpGet(url);
-			HttpClient httpClient = SSLUtil.getHttpClient();
-	        HttpResponse res = httpClient.execute(httpGet);
-	        HttpEntity entity = res.getEntity();
-	        String result = EntityUtils.toString(entity, "UTF-8");
-	        System.out.println("userInfo : " + result);
-	        logger.info("userInfo : " + result);
-	        System.out.println("获取用户openid结束");
-	        logger.info("获取用户openid结束");
-	        /*********获取用户openid结束***************/
-	        WXUser u = gson.fromJson(result, WXUser.class);
+			if(StringUtil.isEmpty(openid)){
+				/*********获取用户openid开始***************/
+				System.out.println("获取用户openid开始");
+				logger.info("获取用户openid开始");
+				String url = "https://api.weixin.qq.com/sns/jscode2session?appid="+Configure.getAppID()+"&secret="+Configure.getSecret()+"&js_code="+code+"&grant_type=authorization_code";
+				HttpGet httpGet = new HttpGet(url);
+				HttpClient httpClient = SSLUtil.getHttpClient();
+		        HttpResponse res = httpClient.execute(httpGet);
+		        HttpEntity entity = res.getEntity();
+		        result = EntityUtils.toString(entity, "UTF-8");
+		        System.out.println("userInfo : " + result);
+		        logger.info("userInfo : " + result);
+		        WXUser u = gson.fromJson(result, WXUser.class);
+		        openid = u.getOpenid();
+		        System.out.println("获取用户openid结束");
+		        logger.info("获取用户openid结束");
+		        /*********获取用户openid结束***************/
+			}
+	       
 	        /*********生成订单开始***************/
 	        System.out.println("生成订单开始");
 	        logger.info("生成订单开始");
-	        String openid = u.getOpenid();
+	       
 	        //扣除代金券
 	        if("1".equals(useDaijinquan)){
 		    	service.deleteOldestDaijinquan(openid);

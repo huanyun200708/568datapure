@@ -51,7 +51,7 @@ public class PaySuccess extends HttpServlet {
 			queryResult = queryResult.replace("\\\"", "");
 			//查询失败,进行退款处理
 			if(queryResult.indexOf("errorMessage")>-1){
-				logger.error("---PaySuccess error --- queryResult");
+				logger.error("---PaySuccess error --- "+queryResult);
 				//如果是维保查询，那么订单生成成功就不能退款了
 				if(queryResult.indexOf("\"submitOrder\":1") == -1){
 					OrderInfo order = payService.getQueryOrderByorderId(orderId);

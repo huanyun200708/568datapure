@@ -48,27 +48,30 @@ public class PayRecord extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.info("PayRecord start...............................");
 		String code = request.getParameter("code");
+		String openid = request.getParameter("openid");
+		logger.info("openid : "+openid);
 		System.out.println("code : " + code);
 		logger.info("code : " + code);
 		 Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").enableComplexMapKeySerialization().disableHtmlEscaping().create();
 		try {
-			/*********获取用户openid开始***************/
-			System.out.println("获取用户openid开始");
-			logger.info("获取用户openid开始");
-			String url = "https://api.weixin.qq.com/sns/jscode2session?appid="+Configure.getAppID()+"&secret="+Configure.getSecret()+"&js_code="+code+"&grant_type=authorization_code";
-			HttpGet httpGet = new HttpGet(url);
-			HttpClient httpClient = SSLUtil.getHttpClient();
-	        HttpResponse res = httpClient.execute(httpGet);
-	        HttpEntity entity = res.getEntity();
-	        String result = EntityUtils.toString(entity, "UTF-8");
-	        System.out.println("userInfo : " + result);
-	        logger.info("userInfo : " + result);
-	        WXUser u = gson.fromJson(result, WXUser.class);
-	        String openid = u.getOpenid();
-	        logger.info("openid : " + openid);
-	        System.out.println("获取用户openid结束");
-	        logger.info("获取用户openid结束");
-	        
+			if(StringUtil.isEmpty(openid)){
+				/*********获取用户openid开始***************/
+				System.out.println("获取用户openid开始");
+				logger.info("获取用户openid开始");
+				String url = "https://api.weixin.qq.com/sns/jscode2session?appid="+Configure.getAppID()+"&secret="+Configure.getSecret()+"&js_code="+code+"&grant_type=authorization_code";
+				HttpGet httpGet = new HttpGet(url);
+				HttpClient httpClient = SSLUtil.getHttpClient();
+		        HttpResponse res = httpClient.execute(httpGet);
+		        HttpEntity entity = res.getEntity();
+		        String result = EntityUtils.toString(entity, "UTF-8");
+		        System.out.println("userInfo : " + result);
+		        logger.info("userInfo : " + result);
+		        WXUser u = gson.fromJson(result, WXUser.class);
+		        openid = u.getOpenid();
+		        logger.info("openid : " + openid);
+		        System.out.println("获取用户openid结束");
+		        logger.info("获取用户openid结束");
+			}
 	        List<JSONObject> jsons = payService.getPayRecordsByOpenId(openid);
 	        
 	        OutputStream out = response.getOutputStream();  
