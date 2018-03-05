@@ -236,14 +236,18 @@ public class PayService {
 		return result;
 	}
 	
-	public boolean insertWXMessage(String content){
+	public boolean insertWXMessage(OrderInfoView orderView,String content){
 		boolean result = false;
-		String sql = "INSERT INTO  568db.wx_message (message_content,issend) VALUES (?,'N')";
+		Date date = new Date();
+		DateFormat format2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String sql = "INSERT INTO  568db.wx_message (message_content,time,orderid,issend) VALUES (?,?,?,'N')";
 		Connection connection =  dao.getDBConnection();
 		PreparedStatement  ps;
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, content);
+			ps.setString(2,format2.format(date));
+			ps.setString(3,orderView.getOrderid());
 			result = ps.executeUpdate() > 0;
 			dao.closeStatement(ps);
 			Dao.releaseConnection(connection);

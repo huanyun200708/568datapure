@@ -11,7 +11,9 @@ public class TestSyso {
 	private PayService payService = new PayService();   
 	public static void main(String[] args) {
 		//String s1 =  CBS.getInstance(QueryAppKeyLib.baoyangUserId,QueryAppKeyLib.baoyangUserKey).getCheckBrand("WDDKJHB8BF092144");
-		System.out.println("'长\\\"命'".replaceAll("\\\\\"", "“"));
+		//System.out.println("'长\\\"命'".replaceAll("\\\\\"", "“"));
+		String[] conditions = "&vin=LHGGK5831F2005506&enginno=1005567".split("&");
+		System.out.println(conditions);
 		
 	}
 	public static void testRegex(){

@@ -1,13 +1,11 @@
 package com.weixinpay.model;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
-import cn.com.hq.util.JsonUtils;
 import cn.com.hq.util.PropertiesUtils;
 import cn.com.hq.util.QueryAppKeyLib;
 import cn.com.hq.util.StringUtil;
@@ -422,39 +420,10 @@ public class WXJL {
 	}
 
 	public static String queryResult(HttpServletRequest request, String orderId) {
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").enableComplexMapKeySerialization().disableHtmlEscaping().create();
-		OrderInfo order = payService.getQueryOrderByorderId(orderId);
 		String vin = request.getParameter("vin");
 		String enginno = request.getParameter("enginno") == null?"":request.getParameter("enginno");
 		String licenseplate =  request.getParameter("licenseplate") == null?"":request.getParameter("licenseplate");
-		order.setQueryCondition("&vin=" + vin+"&enginno=" + enginno+"&licenseplate=" + licenseplate);
-		// order.setOpenid("oUm4A0UA7pG6t-TQUVsLQqRppNl8");
-		//先检查一下品牌是否支持查询
-/*		String s1 =  CBS.getInstance(QueryAppKeyLib.baoyangUserId,QueryAppKeyLib.baoyangUserKey).getCheckBrand(vin);
-		System.out.println(s1);
-		logger.info("BYJL-pre-QueryResult1:\r\n" + s1);
-		Map<String,String> m1 = JsonUtils.json2Map(s1);
-		if(!"1106".equals(m1.get("Code"))){
-			order.setQueryResult("查询失败");
-			payService.updateFinancePayContent(order);
-			return "{\"errorMessage\":\"" +m1.get("Message") + "\",\"success\":false}";
-		}*/
-		String s =  CBS.getInstance(QueryAppKeyLib.baoyangUserId,QueryAppKeyLib.baoyangUserKey).getBuyReport(vin, enginno,null, QueryAppKeyLib.baoyangCallBackUrl);
-		//String s =  DemoData.WBJL;//测试代码
-		s = s.replaceAll("\":\\s*,", "\":\\\"\\\",");
-		WXJL w = gson.fromJson(s, WXJL.class);
-		if(!"0".equals(w.getCode()) && !"".equals(w.getCode())){
-			logger.info("BYJL-pre-QueryResult2:\r\n" + w.getMessage());
-			order.setQueryResult("查询失败");
-			payService.updateFinancePayContent(order);
-			return "{\"errorMessage\":\"查询失败\",\"success\":false}";
-		}else{
-			logger.info("BYJL-pre-QueryResult2:\r\n" + gson.toJson(w));
-			order.setQueryResult("&orderId="+orderId);
-			payService.updateFinancePayContent(order);//测试代码
-			//order.setQueryResult("&orderId="+orderId);
-			return "{\"errorMessage\":\"报告生成中，耐心等待1~3分钟，请在记录里查看记录详情\",\"submitOrder\":1}";
-		}
+		return executeQuery(orderId, vin, enginno, licenseplate);
 // System.out.println("s:\r\n"+s);
 		// 设置请求器的配置
 		/*String orderid = "";
@@ -510,6 +479,39 @@ public class WXJL {
 		}
 
 		return queryResult;*/
+	}
+	
+	public static String executeQuery(String orderId,String vin,String enginno,String licenseplate){
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").enableComplexMapKeySerialization().disableHtmlEscaping().create();
+		OrderInfo order = payService.getQueryOrderByorderId(orderId);
+		order.setQueryCondition("&vin=" + vin+"&enginno=" + enginno+"&licenseplate=" + licenseplate);
+		// order.setOpenid("oUm4A0UA7pG6t-TQUVsLQqRppNl8");
+		//先检查一下品牌是否支持查询
+/*		String s1 =  CBS.getInstance(QueryAppKeyLib.baoyangUserId,QueryAppKeyLib.baoyangUserKey).getCheckBrand(vin);
+		System.out.println(s1);
+		logger.info("BYJL-pre-QueryResult1:\r\n" + s1);
+		Map<String,String> m1 = JsonUtils.json2Map(s1);
+		if(!"1106".equals(m1.get("Code"))){
+			order.setQueryResult("查询失败");
+			payService.updateFinancePayContent(order);
+			return "{\"errorMessage\":\"" +m1.get("Message") + "\",\"success\":false}";
+		}*/
+		String s =  CBS.getInstance(QueryAppKeyLib.baoyangUserId,QueryAppKeyLib.baoyangUserKey).getBuyReport(vin, enginno,null, QueryAppKeyLib.baoyangCallBackUrl);
+		//String s =  DemoData.WBJL;//测试代码
+		s = s.replaceAll("\":\\s*,", "\":\\\"\\\",");
+		WXJL w = gson.fromJson(s, WXJL.class);
+		if(!"0".equals(w.getCode()) && !"".equals(w.getCode())){
+			logger.info("BYJL-pre-QueryResult2:\r\n" + w.getMessage());
+			order.setQueryResult("查询失败");
+			payService.updateFinancePayContent(order);
+			return "{\"errorMessage\":\"查询失败\",\"success\":false}";
+		}else{
+			logger.info("BYJL-pre-QueryResult2:\r\n" + gson.toJson(w));
+			order.setQueryResult("&orderId="+orderId);
+			payService.updateFinancePayContent(order);//测试代码
+			//order.setQueryResult("&orderId="+orderId);
+			return "{\"errorMessage\":\"报告生成中，耐心等待1~3分钟，请在记录里查看记录详情\",\"submitOrder\":1}";
+		}
 	}
 	
 	public WXJL translateWBJL(WXJL w){

@@ -39,6 +39,9 @@ public class PaySuccess extends HttpServlet {
 			logger.info("---PaySuccess start--- 开始查询 ");
 			String queryResult ="";
 			//queryResult = CXJL.queryResult(request, orderId);
+			OrderInfo order = payService.getQueryOrderByorderId(orderId);
+			order.setQueryResult(payType+"开始执行");
+			payService.updateFinancePayContent(order);
 			if("CLZT".equals(payType)){
 				 queryResult = CLZT.queryResult(request, orderId);
 			}else if("BYJL".equals(payType)){
@@ -54,7 +57,7 @@ public class PaySuccess extends HttpServlet {
 				logger.error("---PaySuccess error --- "+queryResult);
 				//如果是维保查询，那么订单生成成功就不能退款了
 				if(queryResult.indexOf("\"submitOrder\":1") == -1){
-					OrderInfo order = payService.getQueryOrderByorderId(orderId);
+					order = payService.getQueryOrderByorderId(orderId);
 					ReFund.reFund(order);
 				}
 

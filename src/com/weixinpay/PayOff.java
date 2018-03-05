@@ -228,6 +228,7 @@ public class PayOff extends HttpServlet {
 			order.setOut_trade_no(RandomStringGenerator.getRandomStringByLength(32));
 			order.setSpbill_create_ip("123.57.218.54");
 			order.setNotify_url("https://51yangcong.com/568data/PayResult");
+			//order.setNotify_url("http://gidtts.natappfree.cc/568data/PayResult");
 			order.setTrade_type("JSAPI");
 			order.setSign_type("MD5");
 			String sign = Signature.getSign(order);//生成签名
@@ -239,8 +240,8 @@ public class PayOff extends HttpServlet {
 			xStream.alias("xml", OrderReturnInfo.class); 
 			OrderReturnInfo returnInfo = (OrderReturnInfo)xStream.fromXML(result);
 			String prepay_id = returnInfo.getPrepay_id();
-			System.out.println("生成订单结束");
-			logger.info("生成订单结束");
+			System.out.println("生成订单结束,订单id:"+order.getOut_trade_no());
+			logger.info("生成订单结束,订单id:"+order.getOut_trade_no());
 	        /*********生成订单结束***************/
 	        
 	        /*********签名开始***************/
