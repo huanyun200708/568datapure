@@ -236,6 +236,30 @@ public class PayService {
 		return result;
 	}
 	
+	public List<Map<String,String>> getWXMessageByorderId(String orderId){
+		String sql = "SELECT message_content,time,orderid,issend FROM 568db.wx_message where orderid=?";
+		Connection connection =  dao.getDBConnection();
+		List<Map<String,String>> mlist = new ArrayList<Map<String,String>>();
+		try {
+			PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setString(1, orderId);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				Map<String,String> m = new HashMap<String, String>();
+				m.put("message_content", rs.getString(1));
+				m.put("time", rs.getString(2));
+				m.put("orderid", rs.getString(3));
+				m.put("issend", rs.getString(4));
+				mlist.add(m);
+		    }
+			dao.closeStatement(ps);
+			Dao.releaseConnection(connection);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return mlist;
+	}
+	
 	public boolean insertWXMessage(OrderInfoView orderView,String content){
 		boolean result = false;
 		Date date = new Date();
