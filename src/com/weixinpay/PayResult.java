@@ -1,9 +1,6 @@
 package com.weixinpay;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -19,10 +16,7 @@ import cn.com.hq.util.StringUtil;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.weixinpay.common.StreamUtil;
-import com.weixinpay.model.OrderInfoView;
 import com.weixinpay.model.PayResultBean;
-import com.weixinpay.model.WXJL;
-import com.weixinpay.service.MyRunnable;
 import com.weixinpay.service.PayService;
 import com.weixinpay.service.WBJLRunnable;
 

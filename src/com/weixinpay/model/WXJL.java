@@ -20,6 +20,7 @@ public class WXJL {
 	private String Code;
 	private String Message;
 	private String modelName;
+	private String orderId;
 	private String seriesName;
 	private String vin;
 	private String makeReportDate;
@@ -64,6 +65,16 @@ public class WXJL {
 
 	public void setMessage(String message) {
 		Message = message;
+	}
+	
+	
+
+	public String getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
 
 	public String getModelName() {
@@ -499,18 +510,19 @@ public class WXJL {
 		String s =  CBS.getInstance(QueryAppKeyLib.baoyangUserId,QueryAppKeyLib.baoyangUserKey).getBuyReport(vin, enginno,null, QueryAppKeyLib.baoyangCallBackUrl);
 		//String s =  DemoData.WBJL;//测试代码
 		s = s.replaceAll("\":\\s*,", "\":\\\"\\\",");
+		logger.info("BYJL-查博士购买返回信息:" + s + "\r\n");
 		WXJL w = gson.fromJson(s, WXJL.class);
 		if(!"0".equals(w.getCode()) && !"".equals(w.getCode())){
 			logger.info("BYJL-pre-QueryResult2:\r\n" + w.getMessage());
-			order.setQueryResult("查询失败");
-			payService.updateFinancePayContent(order);
-			return "{\"errorMessage\":\"查询失败\",\"success\":false}";
+/*			order.setQueryResult(w.getMessage());
+			payService.updateFinancePayContent(order);*/
+			return "{\"errorMessage\":\""+w.getMessage()+"\",\"success\":false}";
 		}else{
 			logger.info("BYJL-pre-QueryResult2:\r\n" + gson.toJson(w));
-			order.setQueryResult("&orderId="+orderId);
-			payService.updateFinancePayContent(order);//测试代码
-			//order.setQueryResult("&orderId="+orderId);
-			return "{\"errorMessage\":\"报告生成中，耐心等待1~3分钟，请在记录里查看记录详情\",\"submitOrder\":1}";
+			/*order.setQueryResult("&orderId="+orderId);
+			payService.updateFinancePayContent(order);
+*/			
+			return "{\"errorMessage\":\"报告生成中，耐心等待1~3分钟，请在记录里查看记录详情\",\"submitOrder\":1,\"chaboshiOrderId\":\""+w.getOrderId()+"\"}";
 		}
 	}
 	
