@@ -419,7 +419,7 @@ public class PayService {
 	
 	public void updateBYJLFinancePayContent(String vin,String resultStr) {
 		logger.info("updateBYJLFinancePayContent start...............................");
-		resultStr = resultStr.replaceAll("'", "‘").replaceAll("\\\\\"", "“");
+		resultStr = resultStr.replaceAll("'", "‘").replaceAll("\\\\\"", "“").replaceAll("	", "");
 		String sql = "update 568db.finance_pay set content='"+resultStr+"' where querycondition LIKE '&vin="+vin+"%' and queryType='BYJL'";
 		logger.info("sql\r\n"+sql);
 		Connection connection =  dao.getDBConnection();
