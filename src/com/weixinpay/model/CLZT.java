@@ -104,6 +104,9 @@ public class CLZT {
 			
 			String vehicleType = c.getResult().getVehicleType();//fulu2
 			c.getResult().setVehicleType(StringUtil.getValueFromMap(vehicleType+"", clzd.getFulu2()));
+			
+			String variety = c.getResult().getVariety();//fulu1
+			c.getResult().setVariety(StringUtil.getValueFromMap(variety+"", clzd.getFulu1()));
 			return;
 		}
 		c.getResult().setState(c.getResult().getState());
