@@ -25,6 +25,7 @@ public class DaijinquanAction extends BaseAction {
 	public void getDaijinquansByOpenId(){
 		HttpServletRequest reguest= super.getRequest();
 		String openId = reguest.getParameter("openId");
+		logger.info(openId+" start getDaijinquansByOpenId...");
 		List<JSONObject> json= service.getDaijinquansByOpenId(openId);
 		
 		if(json != null){
