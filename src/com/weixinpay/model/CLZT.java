@@ -129,6 +129,10 @@ public class CLZT {
 		}
 	}
 	public static String queryResult(HttpServletRequest request,String orderId){
+		String isStopcheliangzhuangtaiQuery = PropertiesUtils.getPropertyValueByKey("isStopcheliangzhuangtaiQuery");
+			if("1".equals(isStopcheliangzhuangtaiQuery)){
+				return "{\"errorMessage\":\"系统维护...\",\"success\":false}";
+			}
 		 	Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").enableComplexMapKeySerialization().disableHtmlEscaping().create();
 		 	 String queryResult = "";
 		     String number = request.getParameter("number").replaceAll("\\s", "");
