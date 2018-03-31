@@ -137,9 +137,12 @@ public class CLZT {
 		 	 String queryResult = "";
 		     String number = request.getParameter("number").replaceAll("\\s", "");
 		     String cltype = request.getParameter("cltype");
-		     String cltypevalue = request.getParameter("cltypevalue");
 
 		     String clzturl = QueryAppKeyLib.cheliangzhuangtaiQueryUrl + "key=" + QueryAppKeyLib.cheliangzhuangtaiQueryAppKey + "&number=" + number;
+		     String isUseSimpleCheLiangZhuangTaiQuery = PropertiesUtils.getPropertyValueByKey("isUseSimpleCheLiangZhuangTaiQuery");
+		     if("1".equals(isUseSimpleCheLiangZhuangTaiQuery)){
+		    	 clzturl = QueryAppKeyLib.cheliangzhuangtaiQuerySimpleUrl + "key=" + QueryAppKeyLib.cheliangzhuangtaiQueryAppKey + "&number=" + number;
+				}
 		     if (!StringUtil.isEmpty(cltype)) {
 		       clzturl = clzturl + "&type=" + cltype.replaceAll("\\s", "");
 		     }
@@ -165,6 +168,7 @@ public class CLZT {
 		        }
 				try {
 					 c.translate(c);
+					 c.getResult().setIsQuerySimple(isUseSimpleCheLiangZhuangTaiQuery);
 				     queryResult = gson.toJson(c);
 				} catch (Exception e) {
 					logger.error(StringUtil.errInfo(e));

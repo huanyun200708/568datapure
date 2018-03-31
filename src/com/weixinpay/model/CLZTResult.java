@@ -2,6 +2,7 @@ package com.weixinpay.model;
 
 public class CLZTResult {
 
+	private String isQuerySimple;
 	private String engine     ;
 	private String state      ;
 	private String plate      ;
@@ -45,8 +46,71 @@ public class CLZTResult {
 	private String vatCount     ;
 	private String stopDate     ;
 
+	private String MaxJourney  ;
+	private String shaft       ;
+	private String wheelBase   ;
+	private String frontTread  ;
+	private String rearTread   ;
+	private String crossWeight ;
+	private String curbWeight  ;
+	private String loadWeight  ;
 	
 	
+	
+	public String getIsQuerySimple() {
+		return isQuerySimple;
+	}
+	public void setIsQuerySimple(String isQuerySimple) {
+		this.isQuerySimple = isQuerySimple;
+	}
+	public String getMaxJourney() {
+		return MaxJourney;
+	}
+	public void setMaxJourney(String maxJourney) {
+		MaxJourney = maxJourney;
+	}
+	public String getShaft() {
+		return shaft;
+	}
+	public void setShaft(String shaft) {
+		this.shaft = shaft;
+	}
+	public String getWheelBase() {
+		return wheelBase;
+	}
+	public void setWheelBase(String wheelBase) {
+		this.wheelBase = wheelBase;
+	}
+	public String getFrontTread() {
+		return frontTread;
+	}
+	public void setFrontTread(String frontTread) {
+		this.frontTread = frontTread;
+	}
+	public String getRearTread() {
+		return rearTread;
+	}
+	public void setRearTread(String rearTread) {
+		this.rearTread = rearTread;
+	}
+	public String getCrossWeight() {
+		return crossWeight;
+	}
+	public void setCrossWeight(String crossWeight) {
+		this.crossWeight = crossWeight;
+	}
+	public String getCurbWeight() {
+		return curbWeight;
+	}
+	public void setCurbWeight(String curbWeight) {
+		this.curbWeight = curbWeight;
+	}
+	public String getLoadWeight() {
+		return loadWeight;
+	}
+	public void setLoadWeight(String loadWeight) {
+		this.loadWeight = loadWeight;
+	}
 	public String getListDate() {
 		return listDate;
 	}
