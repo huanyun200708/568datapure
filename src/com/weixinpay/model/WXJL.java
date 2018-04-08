@@ -17,7 +17,9 @@ import com.weixinpay.service.PayService;
 
 public class WXJL {
 
+	private String isUseBaoYangJiLuWapPage;
 	private String Code;
+	private String wapurl;
 	private String Message;
 	private String modelName;
 	private String orderId;
@@ -51,12 +53,30 @@ public class WXJL {
 	private String score;
 	private static PayService payService = new PayService();   
 	private static Logger logger = Logger.getLogger(WXJL.class);
+	
+	
+	public String getIsUseBaoYangJiLuWapPage() {
+		return isUseBaoYangJiLuWapPage;
+	}
+
+	public void setIsUseBaoYangJiLuWapPage(String isUseBaoYangJiLuWapPage) {
+		this.isUseBaoYangJiLuWapPage = isUseBaoYangJiLuWapPage;
+	}
+
 	public String getCode() {
 		return Code;
 	}
 
 	public void setCode(String code) {
 		Code = code;
+	}
+
+	public String getWapurl() {
+		return wapurl;
+	}
+
+	public void setWapurl(String wapurl) {
+		this.wapurl = wapurl;
 	}
 
 	public String getMessage() {
@@ -560,4 +580,5 @@ public class WXJL {
 		w.setVin(w.getVin());
 		return w;
 	}
+
 }
