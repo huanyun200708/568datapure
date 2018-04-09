@@ -63,6 +63,7 @@ public class ReFund  {
 			String result = EntityUtils.toString(entity, "UTF-8");
 	        
 			System.out.println("---------下单返回: \r\n"+result);
+			 logger.info("---------退单返回: \r\n"+result);
 			XStream xStream = new XStream(new DomDriver());
 			xStream.alias("xml", ReFoundOrderReturnInfo.class); 
 			ReFoundOrderReturnInfo returnInfo = (ReFoundOrderReturnInfo)xStream.fromXML(result);
