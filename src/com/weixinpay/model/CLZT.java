@@ -163,6 +163,9 @@ public class CLZT {
 				.create();
 		String queryResult = "";
 		String number = request.getParameter("number").replaceAll("\\s", "");
+		if (number.length() < 1) {
+			return "{\"errorMessage\":\"车牌为空\",\"success\":false}";
+		}
 		String cltype = request.getParameter("cltype");
 
 		String clzturl = QueryAppKeyLib.cheliangzhuangtaiQueryUrl + "key="

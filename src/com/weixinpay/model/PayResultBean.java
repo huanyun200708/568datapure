@@ -5,6 +5,13 @@ public class PayResultBean {
 	private String appid                 ;
 	private String bank_type             ;
 	private String cash_fee              ;
+	
+	private String coupon_count              ;
+	private String coupon_fee              ;
+	private String coupon_fee_0              ;
+	private String coupon_id_0              ;
+	
+	
 	private String fee_type              ;
 	private String is_subscribe          ;
 	private String mch_id                ;
@@ -113,6 +120,30 @@ public class PayResultBean {
 	}
 	public void setTransaction_id(String transaction_id) {
 		this.transaction_id = transaction_id;
+	}
+	public String getCoupon_count() {
+		return coupon_count;
+	}
+	public void setCoupon_count(String coupon_count) {
+		this.coupon_count = coupon_count;
+	}
+	public String getCoupon_fee() {
+		return coupon_fee;
+	}
+	public void setCoupon_fee(String coupon_fee) {
+		this.coupon_fee = coupon_fee;
+	}
+	public String getCoupon_fee_0() {
+		return coupon_fee_0;
+	}
+	public void setCoupon_fee_0(String coupon_fee_0) {
+		this.coupon_fee_0 = coupon_fee_0;
+	}
+	public String getCoupon_id_0() {
+		return coupon_id_0;
+	}
+	public void setCoupon_id_0(String coupon_id_0) {
+		this.coupon_id_0 = coupon_id_0;
 	}
 	
 	
