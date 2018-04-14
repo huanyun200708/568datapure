@@ -64,7 +64,7 @@ public class PaySuccess extends HttpServlet {
 				}
 
 				 OutputStream out = response.getOutputStream();  
-				 out.write("{\"errorMessage\":\"车号不存在或者空号\",\"success\":false}".getBytes("UTF-8"));  
+				 out.write(queryResult.getBytes("UTF-8"));  
 				return;
 				
 			}else{

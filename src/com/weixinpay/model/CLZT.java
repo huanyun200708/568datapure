@@ -200,8 +200,8 @@ public class CLZT {
 			// return "{\"errorMessage\":\""+c.reason+"\",\"success\":false}";
 			// }
 			if (!"0".equals(c.error_code)) {
-				return "{\"errorMessage\":\"" + c.reason
-						+ "\",\"submitOrder\":1,\"success\":false}";
+				//return "{\"errorMessage\":\"" + c.reason + "\",\"submitOrder\":1,\"success\":false}";
+				return "{\"errorMessage\":\"车号不存在\",\"submitOrder\":1,\"success\":false}";
 			}
 			try {
 				c.translate(c);
